@@ -14,8 +14,8 @@
 
 #### Stretch Goal Features
 
-- [ ] A list can hold
-- [ ] A list item can hold a photo of the item (Stretch - not sure how this works with free db)
+- [ ] A list can holdstore information
+- [ ] A list item can hold a photo of the item (Stretch - not sure how this works with free db)(Cloudinary?)
 - [ ] A list item can be sorted by Store AND/OR department
 
 #### Very Advanced Stretch Goal
@@ -24,28 +24,58 @@
 
 - [ ] Consume an API
 
-### Steps
+### Phase 1: Setup & DB
 
 - [x] Create ERD
-- [x] Create DB
-- [x] Create Tables
-- [ ] Connect DB to server (js file, require pool from pg object)
+- [x] Create DB and Tables
+- [ ] Connect DB to server (set up pool and connect)
 - [ ] Require pool in server file
-- [ ] Build Routes (Restful) FOR base adding to list
 
-  - [ ] create
-  - [ ] read
-  - [ ] update
-  - [ ] delete
+### Phase 2: Core List Routes
 
-- [ ] Build bare minimum UI just to display list (no css)
-- [ ] Build Routes for user auth
-- [ ] Build bare minimum UI to register / log-in (no css)
-- [ ] Build Routes for Household creation
-  - Create household
-  - Read household info
-  - Update household info
-  - Delete household
-  - Add users into household
-- [ ] Build bare minimum UI to display this (no css)
-- [ ]
+- [ ] RESTful Routes for List Items:
+
+  - [ ] Create (POST)
+  - [ ] Read (GET)
+  - [ ] Update (PUT/PATCH)
+  - [ ] Delete (DELETE)
+
+- [ ] Bare minimum UI to display list (no CSS yet)
+
+### Phase 3: User Auth
+
+- [ ] Auth Routes:
+  - [ ] Register
+  - [ ] Login
+  - [ ] Logout (optional session clear)
+  - [ ] Session based or token-based auth
+  - [ ] Middleware to protect routes
+- [ ] UI for Register / Login
+
+### Phase 4: Household Features
+
+- [ ] Household Routes:
+
+  - [ ] Create household
+  - [ ] Read household info
+  - [ ] Update household
+  - [ ] Delete household
+  - [ ] Add/remove users to household
+  - [ ] Admin-only protection (middleware)
+
+- [ ] Switch views feature
+
+  - [ ] Drop down or toggle
+
+- [ ] UI for household actions
+
+### Phase 5: Admin Privileges
+
+- [ ] Restrict household management to admins only
+- [ ] Protect routes (middleware to check admin/user roles)
+
+### Phase 6: Nice-to-Haves
+
+- [ ] Sorting list items by store/department
+- [ ] File/photo uploads or image URLs
+- [ ] Consume an API (e.g., recipe suggestion API)
