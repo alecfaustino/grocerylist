@@ -28,8 +28,8 @@
 
 - [x] Create ERD
 - [x] Create DB and Tables
-- [ ] Connect DB to server (set up pool and connect)
-- [ ] Require pool in server file
+- [x] Connect DB to server (set up pool and connect)
+- [x] Require pool in server file
 
 ### Phase 2: Core List Routes
 

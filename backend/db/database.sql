@@ -1,61 +1,65 @@
 DROP TABLE IF EXISTS items, lists, household_users, households, users, departments, stores CASCADE;
 
+CREATE TYPE user_role AS ENUM ('admin', 'member');
+
 CREATE TABLE users (
-  user_id BIGINT PRIMARY KEY,
+  user_id BIGSERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
   password_hash VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP
+  created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE households (
-  household_id BIGINT PRIMARY KEY,
+  household_id BIGSERIAL PRIMARY KEY,
   address VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP
+  created_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE lists (
-  list_id BIGINT PRIMARY KEY,
+  list_id BIGSERIAL PRIMARY KEY,
   user_id BIGINT,
   household_id BIGINT,
-  name VARCHAR(255),
-  created_at TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (household_id) REFERENCES Households(household_id) ON DELETE CASCADE
+  name VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (household_id) REFERENCES households(household_id) ON DELETE CASCADE,
+  CHECK (
+    (user_id IS NOT NULL AND household_id IS NULL) OR
+    (user_id IS NULL AND household_id IS NOT NULL)
+  ) -- Ensures only one type of list
 );
 
--- JOIN TABLE
 CREATE TABLE household_users (
-  id BIGINT PRIMARY KEY,
-  user_id BIGINT,
-  household_id BIGINT,
-  role VARCHAR(50),
-  FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (household_id) REFERENCES Households(household_id) ON DELETE CASCADE
+  id BIGSERIAL PRIMARY KEY,
+  user_id BIGINT NOT NULL,
+  household_id BIGINT NOT NULL,
+  role user_role NOT NULL DEFAULT 'member',
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (household_id) REFERENCES households(household_id) ON DELETE CASCADE,
+  UNIQUE (user_id, household_id) -- prevent duplicates
 );
 
 CREATE TABLE departments (
-  id BIGINT PRIMARY KEY,
-  name VARCHAR(50)
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL
 );
-
 
 CREATE TABLE stores (
-  id BIGINT PRIMARY KEY,
-  name VARCHAR(50)
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(50) NOT NULL
 );
 
-
 CREATE TABLE items (
-  item_id BIGINT PRIMARY KEY,
-  list_id BIGINT,
-  name VARCHAR(255),
-  quantity INT,
+  item_id BIGSERIAL PRIMARY KEY,
+  list_id BIGINT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL DEFAULT 1,
   photo_url TEXT,
   department_id BIGINT,
   store_id BIGINT,
-  created_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW(),
   FOREIGN KEY (list_id) REFERENCES lists(list_id) ON DELETE CASCADE,
-  FOREIGN KEY (department_id) REFERENCES Departments(id),
+  FOREIGN KEY (department_id) REFERENCES departments(id),
   FOREIGN KEY (store_id) REFERENCES stores(id)
 );
