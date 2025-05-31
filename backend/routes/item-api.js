@@ -13,6 +13,7 @@ router.get("/:listid", async (req, res) => {
   const getItemsValues = [listId];
 
   try {
+    // TODO CHECK IF THE USER HAS ACCESS TO THIS LIST
     const getItemsResult = await db.query(getItemsQuery, getItemsValues);
     res.status(200).json({ item: getItemsResult.rows });
   } catch (error) {
@@ -62,6 +63,36 @@ router.post("/:listid", async (req, res) => {
     console.error("Failed to add list item");
     res.status(500).json({
       error: "Server Error Adding Item",
+    });
+  }
+});
+
+router.delete("/:listid/:itemid", async (req, res) => {
+  const listId = req.params.listid;
+  const itemId = req.params.itemid;
+
+  // TODO VALIDATE IF USER HAS ACCESS TO THIS LIST
+  const deleteItemQuery = `
+    DELETE FROM items
+    WHERE item_id = $1 AND
+    list_id = $2
+    RETURNING *;
+  `;
+
+  const deleteItemValues = [itemId, listId];
+
+  try {
+    const deleteItemResults = await db.query(deleteItemQuery, deleteItemValues);
+
+    // TODO check proper status code for success in deletion
+    res.status(200).json({
+      message: `Success fully deleted item ${itemId} from list ${listId}`,
+      data: deleteItemResults.rows[0],
+    });
+  } catch (error) {
+    console.error(`Failed to delete list item`);
+    res.status(500).json({
+      error: "Server Error Deleting Item from List",
     });
   }
 });
