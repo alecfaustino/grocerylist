@@ -1,0 +1,28 @@
+.list-card-container {
+  border-radius: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  background-color: grey;
+  width: 30em;
+  height: auto;
+  margin: 2em;
+}
+
+.list-card-body {
+  display: flex;
+  align-items: center;
+}
+
+.list-card-check {
+  display: flex;
+  flex: 1;
+}
+
+.list-card-details {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}

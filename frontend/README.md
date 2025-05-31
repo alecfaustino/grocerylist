@@ -35,9 +35,9 @@
 
 - [ ] RESTful Routes for List Items:
 
-  - [ ] Create (POST)
-  - [ ] Read (GET)
-  - [ ] Update (PUT/PATCH)
+  - [x] Create (POST)
+  - [x] Read (GET)
+  - [x] Update (PUT/PATCH)
   - [ ] Delete (DELETE)
 
 - [ ] Bare minimum UI to display list (no CSS yet)
