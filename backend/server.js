@@ -11,7 +11,6 @@ app.use(cors());
 app.use("/users", usersRoutes);
 
 // router definition
-
 const listApi = require("./routes/list-api");
 
 // mounting router

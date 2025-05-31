@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "db:reset": "dotenv -e db/.env -- bash -c 'psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -f db/reset.sql'"
   },
   "keywords": [],
   "author": "",

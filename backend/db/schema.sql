@@ -1,7 +1,11 @@
-DROP TABLE IF EXISTS items, lists, household_users, households, users, departments, stores CASCADE;
+-- Create ENUM type
+DO $$ BEGIN
+  CREATE TYPE user_role AS ENUM ('admin', 'member');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
 
-CREATE TYPE user_role AS ENUM ('admin', 'member');
-
+-- Table: users
 CREATE TABLE users (
   user_id BIGSERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL,
@@ -10,12 +14,14 @@ CREATE TABLE users (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Table: households
 CREATE TABLE households (
   household_id BIGSERIAL PRIMARY KEY,
   address VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Table: lists
 CREATE TABLE lists (
   list_id BIGSERIAL PRIMARY KEY,
   user_id BIGINT,
@@ -27,9 +33,10 @@ CREATE TABLE lists (
   CHECK (
     (user_id IS NOT NULL AND household_id IS NULL) OR
     (user_id IS NULL AND household_id IS NOT NULL)
-  ) -- Ensures only one type of list
+  )
 );
 
+-- Table: household_users
 CREATE TABLE household_users (
   id BIGSERIAL PRIMARY KEY,
   user_id BIGINT NOT NULL,
@@ -37,19 +44,22 @@ CREATE TABLE household_users (
   role user_role NOT NULL DEFAULT 'member',
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   FOREIGN KEY (household_id) REFERENCES households(household_id) ON DELETE CASCADE,
-  UNIQUE (user_id, household_id) -- prevent duplicates
+  UNIQUE (user_id, household_id)
 );
 
+-- Table: departments
 CREATE TABLE departments (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL
 );
 
+-- Table: stores
 CREATE TABLE stores (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(50) NOT NULL
 );
 
+-- Table: items
 CREATE TABLE items (
   item_id BIGSERIAL PRIMARY KEY,
   list_id BIGINT NOT NULL,
