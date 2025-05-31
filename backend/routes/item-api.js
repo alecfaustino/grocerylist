@@ -2,16 +2,24 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
-// test route to get all items from list 1
-router.get("/", async (req, res) => {
-  const listId = 1;
+// test route to get all items from list
+router.get("/:listid", async (req, res) => {
+  const listId = req.params.listid;
+
+  const getItemsQuery = `
+    SELECT * FROM items WHERE list_id = $1;
+  `;
+
+  const getItemsValues = [listId];
 
   try {
-    const result = await db.query("SELECT * FROM items");
-    res.status(200).json({ item: result.rows });
+    const getItemsResult = await db.query(getItemsQuery, getItemsValues);
+    res.status(200).json({ item: getItemsResult.rows });
   } catch (error) {
-    console.error("error fetching items for list 1");
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error(`error fetching items for list ${listId}`);
+    res.status(500).json({
+      error: `Internal Server Error fetching items for list ${listId}`,
+    });
   }
 });
 
