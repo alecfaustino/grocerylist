@@ -11,13 +11,15 @@ const usersRoutes = require("./routes/users-api");
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/users", usersRoutes);
 
 // router definition
 const listApi = require("./routes/list-api");
+const itemApi = require("./routes/item-api");
 
 // mounting router
+app.use("/users", usersRoutes);
 app.use("/api/lists", listApi);
+app.use("/api/items", itemApi);
 
 app.get("/", (req, res) => {
   res.send("Server is running");
