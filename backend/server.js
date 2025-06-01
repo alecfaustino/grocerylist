@@ -16,7 +16,7 @@ const listApi = require("./routes/list-api");
 const itemApi = require("./routes/item-api");
 
 // mounting router
-app.use("/users", usersRoutes);
+app.use("/api/users", usersRoutes);
 app.use("/api/lists", listApi);
 app.use("/api/items", itemApi);
 
