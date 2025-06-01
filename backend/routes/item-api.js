@@ -7,7 +7,13 @@ router.get("/:listid", async (req, res) => {
   const listId = req.params.listid;
 
   const getItemsQuery = `
-    SELECT * FROM items WHERE list_id = $1;
+    SELECT items.*, departments.name as department, stores.name as storename
+    FROM items 
+    LEFT JOIN departments
+    ON departments.id = items.department_id
+    LEFT JOIN stores 
+    ON stores.id = items.store_id
+    WHERE list_id = $1;
   `;
 
   const getItemsValues = [listId];

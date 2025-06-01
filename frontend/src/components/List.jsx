@@ -30,8 +30,8 @@ const List = () => {
           itemId={item.item_id}
           name={item.name}
           quantity={item.quantity}
-          department={item.department_id}
-          store={item.store_id}
+          department={item.department}
+          store={item.storename}
           setItems={setItems}
         />
       ))}
