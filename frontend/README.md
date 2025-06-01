@@ -33,11 +33,11 @@
 
 ### Phase 2: Core List Routes
 
-- [ ] RESTful Routes for List Items:
+- [x] Routes for List Items:
 
   - [x] Create (POST)
   - [x] Read (GET)
-  - [ ] Update (PUT/PATCH)
+  - [x] Update (PUT/PATCH)
   - [x] Delete (DELETE)
 
 - [x] Bare minimum UI to display list (no CSS yet)
@@ -45,10 +45,10 @@
 ### Phase 3: User Auth
 
 - [ ] Auth Routes:
-  - [ ] Register
-  - [ ] Login
-  - [ ] Logout (optional session clear)
-  - [ ] Session based or token-based auth
+  - [x] Register
+  - [x] Login
+  - [x] Logout (optional session clear)
+  - [x] Session based or token-based auth
   - [ ] Middleware to protect routes
 - [ ] UI for Register / Login
 
@@ -79,3 +79,9 @@
 - [ ] Sorting list items by store/department
 - [ ] File/photo uploads or image URLs
 - [ ] Consume an API (e.g., recipe suggestion API)
+
+### To Research
+
+- [ ] React Router
+- [ ] Protected Routes React (Private Route)
+- [ ]
