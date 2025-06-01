@@ -35,8 +35,8 @@ router.post("/:listid", async (req, res) => {
   // TODO REMOVE HARD CODING OF LIST
   const listid = req.params.listid;
   // TODO GET THESE VALUES FROM REQ.BODY IN THE FUTURE
-  const itemname = "oranges";
-  const quantity = 4;
+  const itemname = req.body.name;
+  const quantity = req.body.quantity;
   const photoUrl = null;
   const departmentId = 1;
   const storeId = 1;

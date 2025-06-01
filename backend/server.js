@@ -5,14 +5,13 @@ const cors = require("cors");
 const pool = require("./db/db");
 const morgan = require("morgan");
 
-const usersRoutes = require("./routes/users-api");
-
 //middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
 // router definition
+const usersRoutes = require("./routes/users-api");
 const listApi = require("./routes/list-api");
 const itemApi = require("./routes/item-api");
 

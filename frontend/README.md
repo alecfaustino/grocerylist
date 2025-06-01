@@ -37,10 +37,10 @@
 
   - [x] Create (POST)
   - [x] Read (GET)
-  - [x] Update (PUT/PATCH)
-  - [ ] Delete (DELETE)
+  - [ ] Update (PUT/PATCH)
+  - [x] Delete (DELETE)
 
-- [ ] Bare minimum UI to display list (no CSS yet)
+- [x] Bare minimum UI to display list (no CSS yet)
 
 ### Phase 3: User Auth
 
