@@ -4,10 +4,21 @@ const port = process.env.PORT || 8080;
 const cors = require("cors");
 const pool = require("./db/db");
 const morgan = require("morgan");
+const cookieSession = require("cookie-session");
 
 //middleware
 app.use(cors());
 app.use(express.json());
+app.use(
+  cookieSession({
+    name: "session",
+    // TODO MOVE KEY TO PROCESS.ENV
+    keys: ["aksjengaeg"],
+    maxAge: 24 * 60 * 60 * 1000, // 1 day session
+    httpOnly: true,
+    // secture: process.env.NODE_ENV === 'production'
+  })
+);
 app.use(morgan("dev"));
 
 // router definition

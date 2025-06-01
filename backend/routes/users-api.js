@@ -38,10 +38,15 @@ router.post("/register", async (req, res) => {
 // log in
 router.post("/login", async (req, res) => {
   const userMatchQuery = `
-  SELECT email, password_hash FROM users WHERE email = $1
+  SELECT user_id, email, password_hash FROM users WHERE email = $1
   `;
 
   try {
+    if (!req.body.email || !req.body.password) {
+      return res.status(400).json({
+        message: "Missing email or password!",
+      });
+    }
     const userMatchResult = await db.query(userMatchQuery, [req.body.email]);
     // if the email doesn't have a match in the db
     if (userMatchResult.rows.length === 0) {
@@ -60,11 +65,25 @@ router.post("/login", async (req, res) => {
     if (!passwordMatch)
       return res.status(401).json({ message: "Incorrect Password!" });
 
+    req.session.user_id = user.user_id;
+
     res.status(200).json({
       message: "Login Success!",
+      userId: user.user_id,
     });
   } catch (error) {
-    console.error("error logging in");
+    console.error("error logging in", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
+});
+
+router.post("/logout", (req, res) => {
+  if (!req.session.user_id) {
+    return res.status(400).json({ message: "Not Logged In" });
+  }
+  req.session = null;
+
+  res.status(200).json({ message: "Logged out successfully" });
+  // TODO redirect this eventually
 });
 module.exports = router;
