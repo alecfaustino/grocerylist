@@ -1,0 +1,13 @@
+{
+  "devDependencies": {
+    "dotenv-cli": "^8.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "scripts": {
+    "start-server": "npm --prefix backend run start",
+    "start-client": "npm --prefix frontend run dev",
+    "start": "concurrently \"npm run start-server\" \"npm run start-client\""
+  }
+}

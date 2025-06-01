@@ -52,7 +52,6 @@ router.post("/:listid", async (req, res) => {
     departmentId,
     storeId,
   ];
-
   try {
     const addItemResult = await db.query(addItemQuery, addItemValues);
     res.status(200).json({

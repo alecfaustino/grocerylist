@@ -1,7 +1,20 @@
 import React from "react";
 import "../styles/ListItem.css";
+import axios from "axios";
 
-const ListItem = ({ name, quantity, department, store }) => {
+const ListItem = ({ name, quantity, department, store, itemId, setItems }) => {
+  const deleteTaskClick = async (item) => {
+    try {
+      //hard coded list for now
+      const listId = 1;
+      const deleteResult = await axios.delete(
+        `http://localhost:8080/api/items/${listId}/${item}`
+      );
+      setItems((prevItems) => prevItems.filter((i) => i.item_id !== item));
+    } catch (error) {
+      console.error("Failed to delete item");
+    }
+  };
   return (
     <div className="list-card-container">
       <div className="list-card-body">
@@ -17,7 +30,7 @@ const ListItem = ({ name, quantity, department, store }) => {
       </div>
       <footer>
         <div className="list-card-btn-container">
-          <button>Delete</button>
+          <button onClick={() => deleteTaskClick(itemId)}>Delete</button>
           <button>Edit</button>
         </div>
       </footer>

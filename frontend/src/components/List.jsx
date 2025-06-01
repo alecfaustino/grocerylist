@@ -19,7 +19,7 @@ const List = () => {
       }
     };
     fetchItems();
-  }, []);
+  }, [items]);
   return (
     <div>
       <h2>List Name</h2>
@@ -27,10 +27,12 @@ const List = () => {
       {items.map((item) => (
         <ListItem
           key={item.item_id}
+          itemId={item.item_id}
           name={item.name}
           quantity={item.quantity}
           department={item.department_id}
           store={item.store_id}
+          setItems={setItems}
         />
       ))}
     </div>
