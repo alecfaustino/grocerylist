@@ -40,9 +40,9 @@ VALUES
 -- Stores
 INSERT INTO stores (name)
 VALUES 
-  ('SuperMart'),
-  ('FreshCo'),
-  ('WholeGrocer');
+  ('Costco'),
+  ('SuperStore'),
+  ('Lucky');
 
 -- Items
 INSERT INTO items (list_id, name, quantity, department_id, store_id)

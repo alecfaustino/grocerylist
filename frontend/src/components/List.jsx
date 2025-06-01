@@ -7,7 +7,9 @@ import "../styles/List.css";
 const List = () => {
   const [items, setItems] = useState([]);
   const [itemName, setItemName] = useState("");
-  const [itemQuantity, setitemQuantity] = useState(1);
+  const [itemQuantity, setitemQuantity] = useState("");
+  const [itemStore, setItemStore] = useState("");
+  const [itemDepartment, setItemDepartment] = useState("");
   const listId = 1; // temporarily using this listId.
 
   useEffect(() => {
@@ -26,14 +28,21 @@ const List = () => {
 
   const addItem = async () => {
     try {
-      const added = await axios.post(
-        `http://localhost:8080/api/items/${listId}`,
-        {
-          name: itemName,
-          quantity: itemQuantity,
-        }
+      await axios.post(`http://localhost:8080/api/items/${listId}`, {
+        name: itemName,
+        quantity: itemQuantity,
+        store_id: itemStore,
+        department_id: itemDepartment,
+      });
+
+      const result = await axios.get(
+        `http://localhost:8080/api/items/${listId}`
       );
-      setItems((prevItems) => [...prevItems, added.data.item]);
+      setItems(result.data.item);
+      setItemName("");
+      setitemQuantity("");
+      setItemStore("");
+      setItemDepartment("");
     } catch (error) {
       console.error("Failed to add item");
     }
@@ -47,15 +56,46 @@ const List = () => {
     setitemQuantity(e.target.value);
   };
 
+  const captureStore = (e) => {
+    setItemStore(e.target.value);
+  };
+
+  const captureDepartment = (e) => {
+    setItemDepartment(e.target.value);
+  };
+
   return (
     <div className="list-container">
       <h2>List Name</h2>
       <p>This will be a search bar eventually?</p>
       <p>Household: Personal</p>
       <label>Name</label>
-      <input type="name" onChange={captureName}></input>
+      <input type="text" onChange={captureName} value={itemName}></input>
       <label>Quantity</label>
-      <input type="quantity" onChange={captureQuantity}></input>
+      <input
+        type="number"
+        onChange={captureQuantity}
+        value={itemQuantity}></input>
+      <label>Department</label>
+      <select
+        name="department"
+        onChange={captureDepartment}
+        value={itemDepartment}>
+        <option value="">--Select a Department</option>
+        <option value="1">Produce</option>
+        <option value="2">Dairy</option>
+        <option value="3">Bakery</option>
+        <option value="4">Meat</option>
+        <option value="5">Frozen Foods</option>
+      </select>
+
+      <label>Store</label>
+      <select name="store" onChange={captureStore} value={itemStore}>
+        <option value="">--Select a Store --</option>
+        <option value="1">Costco</option>
+        <option value="2">SuperStore</option>
+        <option value="3">Lucky</option>
+      </select>
 
       <button onClick={addItem}>Add</button>
       {items.map((item) => (

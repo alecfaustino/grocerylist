@@ -38,8 +38,8 @@ router.post("/:listid", async (req, res) => {
   const itemname = req.body.name;
   const quantity = req.body.quantity;
   const photoUrl = null;
-  const departmentId = 1;
-  const storeId = 1;
+  const departmentId = Number(req.body.department_id);
+  const storeId = Number(req.body.store_id);
   // TODO ADD VALIDATION THAT USER AUTHORIZED TO LIST
   // ------ //
 
