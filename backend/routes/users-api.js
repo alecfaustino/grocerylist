@@ -43,15 +43,25 @@ router.post("/login", async (req, res) => {
 
   try {
     const userMatchResult = await db.query(userMatchQuery, [req.body.email]);
+    // if the email doesn't have a match in the db
     if (userMatchResult.rows.length === 0) {
       return res.status(400).json({
         message: "User not found!",
       });
     }
 
+    const user = userMatchResult.rows[0];
+    // returns a boolean
+    const passwordMatch = await bcrypt.compare(
+      req.body.password,
+      user.password_hash
+    );
+
+    if (!passwordMatch)
+      return res.status(401).json({ message: "Incorrect Password!" });
+
     res.status(200).json({
-      message: "User Found!",
-      user: userMatchResult.rows,
+      message: "Login Success!",
     });
   } catch (error) {
     console.error("error logging in");
