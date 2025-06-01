@@ -32,11 +32,10 @@ router.get("/:listid", async (req, res) => {
 
 // add list item to list
 router.post("/:listid", async (req, res) => {
-  // TODO REMOVE HARD CODING OF LIST
   const listid = req.params.listid;
-  // TODO GET THESE VALUES FROM REQ.BODY IN THE FUTURE
   const itemname = req.body.name;
   const quantity = req.body.quantity;
+  // TODO implement this photo function in the future
   const photoUrl = null;
   const departmentId = Number(req.body.department_id);
   const storeId = Number(req.body.store_id);
@@ -72,6 +71,7 @@ router.post("/:listid", async (req, res) => {
   }
 });
 
+// delete from a list
 router.delete("/:listid/:itemid", async (req, res) => {
   const listId = req.params.listid;
   const itemId = req.params.itemid;
@@ -102,4 +102,50 @@ router.delete("/:listid/:itemid", async (req, res) => {
   }
 });
 
+// edit a single item on a list
+router.patch("/:listid/:itemid", async (req, res) => {
+  const listId = req.params.listid;
+  const itemId = req.params.itemid;
+  //TODO implement photoUrl editting
+  const name = "hardcodedddd";
+  const quantity = 3;
+  const photoUrl = null;
+  const department_id = 1;
+  const store_id = 1;
+  const patchQuery = `
+  UPDATE items
+  SET name = $1,
+  quantity = $2,
+  photo_url = $3,
+  department_id = $4,
+  store_id = $5
+  WHERE list_id = $6 AND
+  item_id = $7
+  RETURNING *;
+  `;
+
+  const patchValues = [
+    name,
+    quantity,
+    photoUrl,
+    department_id,
+    store_id,
+    listId,
+    itemId,
+  ];
+
+  try {
+    const patchResult = await db.query(patchQuery, patchValues);
+    res.status(200).json({
+      message: `Successfully updated item ${itemId} in list ${listId}`,
+      data: patchResult.rows,
+    });
+    console.log(patchResult);
+  } catch (error) {
+    console.error("error updating list item");
+    res.statsu(500).json({
+      error: "Server Error Updating List Item",
+    });
+  }
+});
 module.exports = router;
