@@ -31,7 +31,7 @@ const Dashboard = () => {
         <DashList
           key={list.list_id}
           listId={list.list_id}
-          household_id={list.household_id}
+          householdId={list.household_id}
           name={list.name}
         />
       ))}

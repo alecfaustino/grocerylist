@@ -1,6 +1,6 @@
 import React from "react";
 
-const DashList = ({ list_id, household_id, name }) => {
+const DashList = ({ listId, householdId, name }) => {
   /* CREATE TABLE lists (
   list_id BIGSERIAL PRIMARY KEY,
   user_id BIGINT,
@@ -17,6 +17,7 @@ const DashList = ({ list_id, household_id, name }) => {
   return (
     <div>
       <p>{name}</p>
+      <p>id: {listId}</p>
     </div>
   );
 };

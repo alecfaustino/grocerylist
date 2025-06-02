@@ -11,6 +11,8 @@ const List = () => {
   const [itemStore, setItemStore] = useState("");
   const [itemDepartment, setItemDepartment] = useState("");
   const listId = 1; // temporarily using this listId.
+  //useParams
+  //set router in app.jsx to be /lists/:listid to render this page
 
   useEffect(() => {
     const fetchItems = async () => {
