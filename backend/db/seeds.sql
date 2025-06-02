@@ -21,7 +21,11 @@ VALUES
 -- Lists
 INSERT INTO lists (user_id, name)
 VALUES 
-  (1, 'Alice’s Personal List');
+  (1, 'Alice’s Personal List'),
+  (1, 'Alice Costco List'),
+  (1, 'Alice Wednesday List'),
+  (2, 'Bob Monday List'),
+  (2, 'Bob Tuesday List');
 
 INSERT INTO lists (household_id, name)
 VALUES 

@@ -27,13 +27,16 @@ router.get("/me", async (req, res) => {
   const userQuery = `
    SELECT * 
    FROM users
-   WHERE id = $1;
+   WHERE user_id = $1;
   `;
 
   try {
     const userResult = await db.query(userQuery, [userId]);
     res.status(200).json(userResult.rows[0]);
-  } catch (error) {}
+  } catch (error) {
+    console.error("Failed to get user info");
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 // user registration

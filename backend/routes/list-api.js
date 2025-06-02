@@ -15,11 +15,22 @@ router.get("/", async (req, res) => {
   }
 });
 
-// add a list -- to all lists ------ incomplete
-// router.post("/", async (req, res) => {
+// get all list belonging to user
+router.get("/:userid", async (req, res) => {
+  const user = req.params.userid;
+  const listQuery = ` 
+    SELECT * FROM lists WHERE user_id = $1;
+  `;
 
-//   const addItemQuery = `
-//     INSERT into lists (user_id, name, )
-//   `;
-// });
+  try {
+    const listResult = await db.query(listQuery, [user]);
+    console.log(listResult);
+    res.status(200).json({ data: listResult.rows });
+  } catch (error) {
+    console.error("Failed fetching user lists");
+    res.status(500).json({
+      error: "Internal Server Error Fetching User Lists",
+    });
+  }
+});
 module.exports = router;
