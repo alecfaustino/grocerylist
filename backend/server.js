@@ -7,7 +7,12 @@ const morgan = require("morgan");
 const cookieSession = require("cookie-session");
 
 //middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // react app
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(
   cookieSession({

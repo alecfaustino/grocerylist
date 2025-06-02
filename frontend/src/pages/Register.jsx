@@ -1,28 +1,20 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
+  const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userName, setUserName] = useState("");
 
-  const handleLogOut = async () => {
-    try {
-      await axios.post(
-        `http://localhost:8080/api/users/logout`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-    } catch (error) {}
-  };
-
-  const handleLogIn = async () => {
+  const handleRegister = async () => {
     try {
       const result = await axios.post(
-        `http://localhost:8080/api/users/login`,
+        `http://localhost:8080/api/users/register`,
         {
+          name: userName,
           email: userEmail,
           password: userPassword,
         },
@@ -30,13 +22,13 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log("Login success", result.data);
-      setUserEmail("");
-      setUserPassword("");
+      if (result.data.message === "User Created Successfully") {
+        navigate("/login");
+      }
     } catch (error) {
       if (error.response) {
         console.error(
-          "Login failed:",
+          "Register failed:",
           error.response.status,
           error.response.data
         );
@@ -54,11 +46,16 @@ const Login = () => {
     setUserPassword(e.target.value);
   };
 
+  const captureUserName = (e) => {
+    setUserName(e.target.value);
+  };
+
   return (
     <div>
-      <button onClick={handleLogOut}>Logout</button>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form>
+        <label>Name</label>
+        <input type="text" onChange={captureUserName} value={userName}></input>
         <label>email</label>
         <input
           type="email"
@@ -74,8 +71,8 @@ const Login = () => {
           type="submit"
           onClick={(e) => {
             e.preventDefault();
-            handleLogIn();
-            console.log("clicked log in");
+            handleRegister();
+            console.log("clicked Register");
           }}>
           Log In
         </button>
@@ -84,4 +81,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

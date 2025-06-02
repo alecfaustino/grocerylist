@@ -5,7 +5,6 @@ const db = require("../db/db");
 
 // test api for user list
 // TODO delete this route
-
 router.get("/", async (req, res) => {
   try {
     const result = await db.query(`SELECT * FROM users`);
@@ -13,6 +12,28 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.log("error fetching users");
   }
+});
+
+// get the userinfo
+router.get("/me", async (req, res) => {
+  const userId = req.session.user_id;
+
+  if (!userId) {
+    return res.status(403).json({
+      message: "Not Logged In!",
+    });
+  }
+
+  const userQuery = `
+   SELECT * 
+   FROM users
+   WHERE id = $1;
+  `;
+
+  try {
+    const userResult = await db.query(userQuery, [userId]);
+    res.status(200).json(userResult.rows[0]);
+  } catch (error) {}
 });
 
 // user registration
