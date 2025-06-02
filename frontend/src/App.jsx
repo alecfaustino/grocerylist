@@ -1,12 +1,22 @@
-import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import List from "./components/List";
-
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import NotFoundPage from "./pages/NotFoundPage";
+import Navbar from "./components/Navbar";
 function App() {
+  // ADD A INDEX ROUTE
   return (
-    <div className="main-container">
-      <List />
-    </div>
+    <>
+      <Navbar></Navbar>
+      <Routes>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="register" element={<Register />}></Route>
+        <Route path="/dashboard/:userId" element={<Dashboard />}></Route>
+        <Route path="*" element={<NotFoundPage />}></Route>
+      </Routes>
+    </>
   );
 }
 

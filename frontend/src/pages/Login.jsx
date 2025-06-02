@@ -1,22 +1,12 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
-  const handleLogOut = async () => {
-    try {
-      await axios.post(
-        `http://localhost:8080/api/users/logout`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-    } catch (error) {}
-  };
 
   const handleLogIn = async () => {
     try {
@@ -30,9 +20,15 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      console.log("Login success", result.data);
+      // get user information from users/api/me
+      const user = await axios.get("http://localhost:8080/api/users/me", {
+        withCredentials: true,
+      });
+
+      const userId = user.data.user_id;
       setUserEmail("");
       setUserPassword("");
+      navigate(`/dashboard/${userId}`);
     } catch (error) {
       if (error.response) {
         console.error(
@@ -56,7 +52,6 @@ const Login = () => {
 
   return (
     <div>
-      <button onClick={handleLogOut}>Logout</button>
       <h1>Login</h1>
       <form>
         <label>email</label>

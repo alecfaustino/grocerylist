@@ -50,7 +50,13 @@
   - [x] Logout (optional session clear)
   - [x] Session based or token-based auth
   - [ ] Middleware to protect routes
-- [ ] UI for Register / Login
+- [x] UI for Register / Login
+
+### Updated 1 June 2025: Phase 3.5 View to show all lists
+
+- [ ] Dashboard UI:
+  - [ ] My Personal Lists: User owned lists
+  - [ ] My Household Lists:
 
 ### Phase 4: Household Features
 
