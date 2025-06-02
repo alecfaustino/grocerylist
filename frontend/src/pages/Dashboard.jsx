@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import DashList from "../components/DashList";
 
 const Dashboard = () => {
   const { userId } = useParams();
@@ -10,21 +11,30 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchLists = async () => {
       try {
-        const listresult = await axios.get(
+        const listResult = await axios.get(
           `http://localhost:8080/api/lists/${userId}`
         );
-        console.log(listresult.data);
-      } catch (error) {}
+        setLists(listResult.data.data);
+      } catch (error) {
+        console.error("failed to fetch lists: ", error);
+      }
     };
 
     fetchLists();
-  }, []);
+  }, [userId]);
 
   return (
     <div>
       <h1>Dashboard</h1>
       <h2>My Lists</h2>
-      {lists.map((list) => {})}
+      {lists.map((list) => (
+        <DashList
+          key={list.list_id}
+          listId={list.list_id}
+          household_id={list.household_id}
+          name={list.name}
+        />
+      ))}
     </div>
   );
 };
