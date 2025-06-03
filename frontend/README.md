@@ -55,9 +55,14 @@
 ### Updated 1 June 2025: Phase 3.5 View to show all lists
 
 - [x] Dashboard UI:
+
   - [x] My Personal Lists: User owned lists
-  - [ ] Update the routes in app.jsx (comment in list.jsx)
-  - [ ] My Household Lists:
+  - [x] Update the routes in app.jsx (comment in list.jsx)
+  - [ ] My Household Lists: with Phase 4
+
+- [ ] Add List
+- [ ] Delete List
+- [ ] Edit List
 
 ### Phase 4: Household Features
 

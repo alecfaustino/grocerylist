@@ -2,19 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
 
-// get all list in db
-router.get("/", async (req, res) => {
-  const query = "SELECT * FROM lists;";
-
-  try {
-    const result = await db.query(query);
-    res.status(200).json({ data: result.rows });
-  } catch (error) {
-    console.error("Failed to fetch");
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 // get all list belonging to user
 router.get("/:userid", async (req, res) => {
   const user = req.params.userid;
@@ -33,4 +20,59 @@ router.get("/:userid", async (req, res) => {
     });
   }
 });
+
+// add a list (personal)
+router.post("/:userid", async (req, res) => {
+  const user = req.params.userid;
+  const name = req.body.name;
+  const addlistQuery = `
+  INSERT INTO lists (user_id, name)
+  VALUES ($1, $2)
+  RETURNING *;
+  `;
+
+  const addListValues = [user, name];
+
+  try {
+    const addListResult = await db.query(addlistQuery, addListValues);
+    res.status(200).json({
+      message: `Successfully added a new list`,
+      data: addListResult.rows[0],
+    });
+  } catch (error) {
+    console.error("Failed to add new list: ", error);
+    res.status(500).json({
+      error: "Server Error Adding List",
+    });
+  }
+});
+
+// delete a list item (personal)
+router.delete("/:userid/:listid", async (req, res) => {
+  const user = req.params.userid;
+  const listId = req.params.listid;
+  const deleteListQuery = `
+  DELETE FROM lists
+  WHERE list_id = $1 AND
+  user_id = $2
+  RETURNING *;
+  `;
+
+  const deleteQueryValues = [listId, user];
+
+  try {
+    const deleteResult = await db.query(deleteListQuery, deleteQueryValues);
+
+    res.status(200).json({
+      message: `Successfully deleted list ${listId} from user list ${user}`,
+      data: deleteResult.rows[0],
+    });
+  } catch (error) {
+    console.error("Failed to delete list: ", error);
+    res.status(500).json({
+      message: "Server Error Deleting User List",
+    });
+  }
+});
+
 module.exports = router;

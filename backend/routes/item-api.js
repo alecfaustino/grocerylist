@@ -64,7 +64,7 @@ router.post("/:listid", async (req, res) => {
       item: addItemResult.rows[0],
     });
   } catch (error) {
-    console.error("Failed to add list item");
+    console.error("Failed to add list item: ", error);
     res.status(500).json({
       error: "Server Error Adding Item",
     });
@@ -91,7 +91,7 @@ router.delete("/:listid/:itemid", async (req, res) => {
 
     // TODO check proper status code for success in deletion
     res.status(200).json({
-      message: `Success fully deleted item ${itemId} from list ${listId}`,
+      message: `Successfully deleted item ${itemId} from list ${listId}`,
       data: deleteItemResults.rows[0],
     });
   } catch (error) {
