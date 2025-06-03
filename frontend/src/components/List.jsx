@@ -3,6 +3,7 @@ import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 import ListItem from "./ListItem.Jsx";
 import "../styles/List.css";
+import { useParams } from "react-router-dom";
 
 const List = () => {
   const [items, setItems] = useState([]);
@@ -10,9 +11,7 @@ const List = () => {
   const [itemQuantity, setitemQuantity] = useState("");
   const [itemStore, setItemStore] = useState("");
   const [itemDepartment, setItemDepartment] = useState("");
-  const listId = 1; // temporarily using this listId.
-  //useParams
-  //set router in app.jsx to be /lists/:listid to render this page
+  const { listId } = useParams();
 
   useEffect(() => {
     const fetchItems = async () => {

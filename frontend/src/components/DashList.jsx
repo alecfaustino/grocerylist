@@ -1,6 +1,6 @@
 import React from "react";
 
-const DashList = ({ listId, householdId, name }) => {
+const DashList = ({ listId, householdId, name, handleListClick }) => {
   /* CREATE TABLE lists (
   list_id BIGSERIAL PRIMARY KEY,
   user_id BIGINT,
@@ -15,7 +15,7 @@ const DashList = ({ listId, householdId, name }) => {
   )
 ); */
   return (
-    <div>
+    <div onClick={() => handleListClick(listId)}>
       <p>{name}</p>
       <p>id: {listId}</p>
     </div>

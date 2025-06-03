@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import NotFoundPage from "./pages/NotFoundPage";
 import Navbar from "./components/Navbar";
+import List from "./components/List";
 function App() {
   // ADD A INDEX ROUTE
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="register" element={<Register />}></Route>
         <Route path="/dashboard/:userId" element={<Dashboard />}></Route>
+        <Route path="/list/:listId" element={<List />}></Route>
         <Route path="*" element={<NotFoundPage />}></Route>
       </Routes>
     </>
