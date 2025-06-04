@@ -2,8 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import "../styles/Login.css";
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const location = useLocation();
   const errorMessage = location.state?.message;
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const Login = () => {
       });
 
       const userId = user.data.user_id;
+      setIsLoggedIn(true);
       setUserEmail("");
       setUserPassword("");
       navigate(`/dashboard/`);
@@ -53,36 +55,40 @@ const Login = () => {
   };
 
   return (
-    <div>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <h1>Login</h1>
-      <form>
-        <label>email</label>
+    <div className="login-container">
+      <form className="login-form">
+        <h1>Login</h1>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+        <label htmlFor="email">Email</label>
         <input
+          id="email"
           type="email"
           onChange={captureUserEmail}
-          value={userEmail}></input>
-        <label>Password</label>
+          value={userEmail}
+        />
+
+        <label htmlFor="password">Password</label>
         <input
+          id="password"
           type="password"
           onChange={captureUserPassword}
-          value={userPassword}></input>
+          value={userPassword}
+        />
 
         <button
           type="submit"
           onClick={(e) => {
             e.preventDefault();
             handleLogIn();
-            console.log("clicked log in");
           }}>
           Log In
         </button>
-      </form>
-      <div>
-        <p>
-          No Account? <Link to="/register">Register</Link>
+
+        <p className="register-link">
+          No account? <Link to="/register">Register Here</Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 };

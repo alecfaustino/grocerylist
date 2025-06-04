@@ -6,18 +6,41 @@ import Dashboard from "./pages/Dashboard";
 import NotFoundPage from "./pages/NotFoundPage";
 import Navbar from "./components/Navbar";
 import List from "./components/List";
+import { useState, useEffect } from "react";
 function App() {
   // ADD A INDEX ROUTE
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/users/me", {
+          withCredentials: true,
+        });
+        setIsLoggedIn(!!res.data?.user_id);
+      } catch {
+        setIsLoggedIn(false);
+      }
+    };
+    checkLogin();
+  }, []);
+
   return (
     <>
-      <Navbar></Navbar>
-      <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="register" element={<Register />}></Route>
-        <Route path="/dashboard/" element={<Dashboard />}></Route>
-        <Route path="/list/:listId" element={<List />}></Route>
-        <Route path="*" element={<NotFoundPage />}></Route>
-      </Routes>
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+      <div className="main-content">
+        <Routes>
+          <Route
+            path="/login"
+            element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard/" element={<Dashboard />} />
+          <Route path="/list/:listId" element={<List />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </div>
     </>
   );
 }
