@@ -30,7 +30,7 @@ const Login = () => {
       const userId = user.data.user_id;
       setUserEmail("");
       setUserPassword("");
-      navigate(`/dashboard/${userId}`);
+      navigate(`/dashboard/`);
     } catch (error) {
       if (error.response) {
         console.error(

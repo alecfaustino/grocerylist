@@ -26,7 +26,6 @@ const List = () => {
           }
         );
         setItems(result.data.item);
-        console.log(result.data);
         setListName(result.data.listName);
       } catch (error) {
         if (error.response && error.response.status === 401) {

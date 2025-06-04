@@ -12,7 +12,7 @@ const DashList = ({
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     try {
-      await axios.delete(`http://localhost:8080/api/lists/${userId}/${id}`);
+      await axios.delete(`http://localhost:8080/api/lists/${id}`);
       setLists((prevLists) => prevLists.filter((l) => l.list_id !== id));
     } catch (error) {
       console.error("Failed to delete list");

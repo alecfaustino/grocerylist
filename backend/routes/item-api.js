@@ -50,7 +50,7 @@ router.get("/:listid", requireLogin, async (req, res) => {
 
 // add list item to list
 router.post("/:listid", requireLogin, async (req, res) => {
-  const userId = req.params.user_id;
+  const userId = req.session.user_id;
   if (!userId) {
     return res.status(401).json({ error: "Not authenticated" });
   }
@@ -68,7 +68,6 @@ router.post("/:listid", requireLogin, async (req, res) => {
     RETURNING *;
   `;
 
-  // HARD CODED FOR NOW BUT WILL WORK WITH RES.BODY
   const addItemValues = [
     listid,
     itemname,
@@ -80,7 +79,7 @@ router.post("/:listid", requireLogin, async (req, res) => {
   try {
     // check ownership
     const listCheck = await db.query(
-      `SELECT 1 FROM lists WHERE list_id = $1 AND user_id = $2;`,
+      `SELECT * FROM lists WHERE list_id = $1 AND user_id = $2;`,
       [listid, req.session.user_id]
     );
     if (listCheck.rows.length === 0) {
@@ -103,14 +102,13 @@ router.post("/:listid", requireLogin, async (req, res) => {
 
 // delete from a list
 router.delete("/:listid/:itemid", requireLogin, async (req, res) => {
-  const userId = req.params.user_id;
+  const userId = req.session.user_id;
   if (!userId) {
     return res.status(401).json({ error: "Not authenticated" });
   }
   const listId = req.params.listid;
   const itemId = req.params.itemid;
 
-  // TODO VALIDATE IF USER HAS ACCESS TO THIS LIST
   const deleteItemQuery = `
     DELETE FROM items
     WHERE item_id = $1 AND
@@ -123,8 +121,8 @@ router.delete("/:listid/:itemid", requireLogin, async (req, res) => {
   try {
     // check ownership
     const listCheck = await db.query(
-      `SELECT 1 FROM lists WHERE list_id = $1 AND user_id = $2;`,
-      [listid, req.session.user_id]
+      `SELECT * FROM lists WHERE list_id = $1 AND user_id = $2;`,
+      [listId, req.session.user_id]
     );
     if (listCheck.rows.length === 0) {
       return res
@@ -148,7 +146,7 @@ router.delete("/:listid/:itemid", requireLogin, async (req, res) => {
 
 // edit a single item on a list
 router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
-  const userId = req.params.user_id;
+  const userId = req.session.user_id;
   if (!userId) {
     return res.status(401).json({ error: "Not authenticated" });
   }
@@ -185,8 +183,8 @@ router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
   try {
     // check ownership
     const listCheck = await db.query(
-      `SELECT 1 FROM lists WHERE list_id = $1 AND user_id = $2;`,
-      [listid, req.session.user_id]
+      `SELECT * FROM lists WHERE list_id = $1 AND user_id = $2;`,
+      [listId, req.session.user_id]
     );
     if (listCheck.rows.length === 0) {
       return res

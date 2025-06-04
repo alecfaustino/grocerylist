@@ -13,12 +13,9 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchLists = async () => {
       try {
-        const listResult = await axios.get(
-          `http://localhost:8080/api/lists/${userId}`,
-          {
-            withCredentials: true,
-          }
-        );
+        const listResult = await axios.get(`http://localhost:8080/api/lists/`, {
+          withCredentials: true,
+        });
         setLists(listResult.data.data);
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -48,13 +45,11 @@ const Dashboard = () => {
   const addList = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8080/api/lists/${userId}`, {
+      await axios.post(`http://localhost:8080/api/lists/`, {
         name: listName,
       });
 
-      const result = await axios.get(
-        `http://localhost:8080/api/lists/${userId}`
-      );
+      const result = await axios.get(`http://localhost:8080/api/lists/`);
       setLists(result.data.data);
       setListName("");
     } catch (error) {

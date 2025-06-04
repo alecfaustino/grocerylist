@@ -1,12 +1,12 @@
 import React from "react";
 import "../styles/ListItem.css";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ListItem = ({ name, quantity, department, store, itemId, setItems }) => {
+  const { listId } = useParams();
   const deleteTaskClick = async (item) => {
     try {
-      //hard coded list for now
-      const listId = 1;
       const deleteResult = await axios.delete(
         `http://localhost:8080/api/items/${listId}/${item}`
       );
