@@ -74,7 +74,7 @@ const Register = () => {
             handleRegister();
             console.log("clicked Register");
           }}>
-          Log In
+          Register
         </button>
       </form>
     </div>

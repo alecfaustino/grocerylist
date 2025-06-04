@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
+const { requireLogin } = require("../middleware/auth");
 
 // test route to get all items from list
-router.get("/:listid", async (req, res) => {
+router.get("/:listid", requireLogin, async (req, res) => {
   const listId = req.params.listid;
 
   const getItemsQuery = `
@@ -31,7 +32,7 @@ router.get("/:listid", async (req, res) => {
 });
 
 // add list item to list
-router.post("/:listid", async (req, res) => {
+router.post("/:listid", requireLogin, async (req, res) => {
   const listid = req.params.listid;
   const itemname = req.body.name;
   const quantity = req.body.quantity;
@@ -72,7 +73,7 @@ router.post("/:listid", async (req, res) => {
 });
 
 // delete from a list
-router.delete("/:listid/:itemid", async (req, res) => {
+router.delete("/:listid/:itemid", requireLogin, async (req, res) => {
   const listId = req.params.listid;
   const itemId = req.params.itemid;
 
@@ -103,7 +104,7 @@ router.delete("/:listid/:itemid", async (req, res) => {
 });
 
 // edit a single item on a list
-router.patch("/:listid/:itemid", async (req, res) => {
+router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
   const listId = req.params.listid;
   const itemId = req.params.itemid;
   //TODO implement photoUrl editting
@@ -143,9 +144,10 @@ router.patch("/:listid/:itemid", async (req, res) => {
     console.log(patchResult);
   } catch (error) {
     console.error("error updating list item");
-    res.statsu(500).json({
+    res.status(500).json({
       error: "Server Error Updating List Item",
     });
   }
 });
+
 module.exports = router;

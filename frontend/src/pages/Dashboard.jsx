@@ -14,11 +14,23 @@ const Dashboard = () => {
     const fetchLists = async () => {
       try {
         const listResult = await axios.get(
-          `http://localhost:8080/api/lists/${userId}`
+          `http://localhost:8080/api/lists/${userId}`,
+          {
+            withCredentials: true,
+          }
         );
         setLists(listResult.data.data);
       } catch (error) {
-        console.error("failed to fetch lists: ", error);
+        if (error.response && error.response.status === 401) {
+          navigate("/login", {
+            state: {
+              from: "dashboard",
+              message: "Not logged in. Please log in",
+            },
+          });
+        } else {
+          console.error("Failed to fetch items: ", error);
+        }
       }
     };
 

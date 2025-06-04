@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db/db");
+const { requireLogin } = require("../middleware/auth");
 
 // get all list belonging to user
-router.get("/:userid", async (req, res) => {
+router.get("/:userid", requireLogin, async (req, res) => {
   const user = req.params.userid;
   const listQuery = ` 
     SELECT * FROM lists WHERE user_id = $1;
@@ -22,7 +23,7 @@ router.get("/:userid", async (req, res) => {
 });
 
 // add a user list (personal)
-router.post("/:userid", async (req, res) => {
+router.post("/:userid", requireLogin, async (req, res) => {
   const user = req.params.userid;
   const name = req.body.name;
   const addlistQuery = `
@@ -48,7 +49,7 @@ router.post("/:userid", async (req, res) => {
 });
 
 // delete a user list  (personal)
-router.delete("/:userid/:listid", async (req, res) => {
+router.delete("/:userid/:listid", requireLogin, async (req, res) => {
   const user = req.params.userid;
   const listId = req.params.listid;
   const deleteListQuery = `

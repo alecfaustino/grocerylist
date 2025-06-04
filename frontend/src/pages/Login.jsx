@@ -1,9 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Login = () => {
+  const location = useLocation();
+  const errorMessage = location.state?.message;
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -52,6 +54,7 @@ const Login = () => {
 
   return (
     <div>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <h1>Login</h1>
       <form>
         <label>email</label>
@@ -75,6 +78,11 @@ const Login = () => {
           Log In
         </button>
       </form>
+      <div>
+        <p>
+          No Account? <Link to="/register">Register</Link>
+        </p>
+      </div>
     </div>
   );
 };

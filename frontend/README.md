@@ -1,20 +1,20 @@
 ### User Stories
 
-- [ ] Users can create an account
-- [ ] Users have access to their personal list
+- [x] Users can create an account
+- [x] Users have access to their personal list
 - [ ] Users can join households to see household list
 - [ ] Users can add, delete, remove, edit list items in personal OR household
 - [ ] Users can switch between households / personal lists
-- [ ] A list item can hold an item name
-- [ ] A list item can hold quantity to purchase
+- [x] A list item can hold an item name
+- [x] A list item can hold quantity to purchase
 
-- [ ] A list item can select department
+- [x] A list item can select department
 - [ ] A household admin can invite users
 - [ ] A household admin can remove users
 
 #### Stretch Goal Features
 
-- [ ] A list can holdstore information
+- [x] A list can holdstore information
 - [ ] A list item can hold a photo of the item (Stretch - not sure how this works with free db)(Cloudinary?)
 - [ ] A list item can be sorted by Store AND/OR department
 
@@ -60,8 +60,8 @@
   - [x] Update the routes in app.jsx (comment in list.jsx)
   - [ ] My Household Lists: with Phase 4
 
-- [ ] Add List
-- [ ] Delete List
+- [x] Add List
+- [x] Delete List
 - [ ] Edit List
 
 ### Phase 4: Household Features

@@ -3,9 +3,10 @@ import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 import ListItem from "./ListItem.Jsx";
 import "../styles/List.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const List = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [itemName, setItemName] = useState("");
   const [itemQuantity, setitemQuantity] = useState("");
@@ -15,13 +16,26 @@ const List = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
+      console.log("listId is:", listId);
       try {
         const result = await axios.get(
-          `http://localhost:8080/api/items/${listId}`
+          `http://localhost:8080/api/items/${listId}`,
+          {
+            withCredentials: true,
+          }
         );
         setItems(result.data.item);
       } catch (error) {
-        console.error("failed to fetch items: ", error);
+        if (error.response && error.response.status === 401) {
+          navigate("/login", {
+            state: {
+              from: "list",
+              message: "Not logged in. Please log in",
+            },
+          });
+        } else {
+          console.error("Failed to fetch items: ", error);
+        }
       }
     };
     fetchItems();
