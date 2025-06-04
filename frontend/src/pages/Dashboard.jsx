@@ -32,13 +32,16 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       <h2>My Lists</h2>
+      <button>Add List</button>
       {lists.map((list) => (
         <DashList
           key={list.list_id}
           listId={list.list_id}
           householdId={list.household_id}
           name={list.name}
+          userId={userId}
           handleListClick={handleListClick}
+          setLists={setLists}
         />
       ))}
     </div>

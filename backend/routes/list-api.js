@@ -21,7 +21,7 @@ router.get("/:userid", async (req, res) => {
   }
 });
 
-// add a list (personal)
+// add a user list (personal)
 router.post("/:userid", async (req, res) => {
   const user = req.params.userid;
   const name = req.body.name;
@@ -47,7 +47,7 @@ router.post("/:userid", async (req, res) => {
   }
 });
 
-// delete a list item (personal)
+// delete a user list  (personal)
 router.delete("/:userid/:listid", async (req, res) => {
   const user = req.params.userid;
   const listId = req.params.listid;
