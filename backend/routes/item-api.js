@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../db/db");
 const { requireLogin } = require("../middleware/auth");
 
-// test route to get all items from list
+// get all items from list
 router.get("/:listid", requireLogin, async (req, res) => {
   const listId = req.params.listid;
 
@@ -17,12 +17,29 @@ router.get("/:listid", requireLogin, async (req, res) => {
     WHERE list_id = $1;
   `;
 
+  const listOwnerQuery = `
+  SELECT name 
+  FROM lists 
+  WHERE list_id = $1 AND
+  user_id = $2;
+  `;
+
+  const listOwnerValues = [listId, req.session.user_id];
+
   const getItemsValues = [listId];
 
   try {
-    // TODO CHECK IF THE USER HAS ACCESS TO THIS LIST
+    const listCheck = await db.query(listOwnerQuery, listOwnerValues);
+
+    if (listCheck.rows.length === 0) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You don't own this list" });
+    }
     const getItemsResult = await db.query(getItemsQuery, getItemsValues);
-    res.status(200).json({ item: getItemsResult.rows });
+    res
+      .status(200)
+      .json({ item: getItemsResult.rows, listName: listCheck.rows[0].name });
   } catch (error) {
     console.error(`error fetching items for list ${listId}`);
     res.status(500).json({
@@ -33,6 +50,10 @@ router.get("/:listid", requireLogin, async (req, res) => {
 
 // add list item to list
 router.post("/:listid", requireLogin, async (req, res) => {
+  const userId = req.params.user_id;
+  if (!userId) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
   const listid = req.params.listid;
   const itemname = req.body.name;
   const quantity = req.body.quantity;
@@ -40,8 +61,6 @@ router.post("/:listid", requireLogin, async (req, res) => {
   const photoUrl = null;
   const departmentId = Number(req.body.department_id);
   const storeId = Number(req.body.store_id);
-  // TODO ADD VALIDATION THAT USER AUTHORIZED TO LIST
-  // ------ //
 
   const addItemQuery = `
     INSERT INTO items (list_id, name, quantity, photo_url, department_id, store_id)
@@ -59,6 +78,16 @@ router.post("/:listid", requireLogin, async (req, res) => {
     storeId,
   ];
   try {
+    // check ownership
+    const listCheck = await db.query(
+      `SELECT 1 FROM lists WHERE list_id = $1 AND user_id = $2;`,
+      [listid, req.session.user_id]
+    );
+    if (listCheck.rows.length === 0) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You don't own this list" });
+    }
     const addItemResult = await db.query(addItemQuery, addItemValues);
     res.status(200).json({
       message: `Successfully added to list ${listid}: `,
@@ -74,6 +103,10 @@ router.post("/:listid", requireLogin, async (req, res) => {
 
 // delete from a list
 router.delete("/:listid/:itemid", requireLogin, async (req, res) => {
+  const userId = req.params.user_id;
+  if (!userId) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
   const listId = req.params.listid;
   const itemId = req.params.itemid;
 
@@ -88,6 +121,16 @@ router.delete("/:listid/:itemid", requireLogin, async (req, res) => {
   const deleteItemValues = [itemId, listId];
 
   try {
+    // check ownership
+    const listCheck = await db.query(
+      `SELECT 1 FROM lists WHERE list_id = $1 AND user_id = $2;`,
+      [listid, req.session.user_id]
+    );
+    if (listCheck.rows.length === 0) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You don't own this list" });
+    }
     const deleteItemResults = await db.query(deleteItemQuery, deleteItemValues);
 
     // TODO check proper status code for success in deletion
@@ -105,6 +148,10 @@ router.delete("/:listid/:itemid", requireLogin, async (req, res) => {
 
 // edit a single item on a list
 router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
+  const userId = req.params.user_id;
+  if (!userId) {
+    return res.status(401).json({ error: "Not authenticated" });
+  }
   const listId = req.params.listid;
   const itemId = req.params.itemid;
   //TODO implement photoUrl editting
@@ -136,6 +183,16 @@ router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
   ];
 
   try {
+    // check ownership
+    const listCheck = await db.query(
+      `SELECT 1 FROM lists WHERE list_id = $1 AND user_id = $2;`,
+      [listid, req.session.user_id]
+    );
+    if (listCheck.rows.length === 0) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You don't own this list" });
+    }
     const patchResult = await db.query(patchQuery, patchValues);
     res.status(200).json({
       message: `Successfully updated item ${itemId} in list ${listId}`,

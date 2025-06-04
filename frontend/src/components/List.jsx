@@ -12,6 +12,7 @@ const List = () => {
   const [itemQuantity, setitemQuantity] = useState("");
   const [itemStore, setItemStore] = useState("");
   const [itemDepartment, setItemDepartment] = useState("");
+  const [listName, setListName] = useState("");
   const { listId } = useParams();
 
   useEffect(() => {
@@ -25,6 +26,8 @@ const List = () => {
           }
         );
         setItems(result.data.item);
+        console.log(result.data);
+        setListName(result.data.listName);
       } catch (error) {
         if (error.response && error.response.status === 401) {
           navigate("/login", {
@@ -81,7 +84,7 @@ const List = () => {
 
   return (
     <div className="list-container">
-      <h2>List Name</h2>
+      <h2>{listName}</h2>
       <p>This will be a search bar eventually?</p>
       <p>Household: Personal</p>
       <label>Name</label>

@@ -3,17 +3,6 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const db = require("../db/db");
 
-// test api for user list
-// TODO delete this route
-router.get("/", async (req, res) => {
-  try {
-    const result = await db.query(`SELECT * FROM users`);
-    res.status(200).json({ data: result.rows });
-  } catch (error) {
-    console.log("error fetching users");
-  }
-});
-
 // get the userinfo
 router.get("/me", async (req, res) => {
   const userId = req.session.user_id;
