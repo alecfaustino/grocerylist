@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -76,6 +76,9 @@ const Register = () => {
           }}>
           Register
         </button>
+        <div>
+          Already have an account? <Link to="/login">Log in!</Link>
+        </div>
       </form>
     </div>
   );

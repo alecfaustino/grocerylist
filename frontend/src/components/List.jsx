@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react";
 import ListItem from "./ListItem.Jsx";
 import "../styles/List.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 const List = () => {
   const navigate = useNavigate();
@@ -17,7 +17,6 @@ const List = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
-      console.log("listId is:", listId);
       try {
         const result = await axios.get(
           `http://localhost:8080/api/items/${listId}`,
@@ -126,6 +125,12 @@ const List = () => {
           setItems={setItems}
         />
       ))}
+
+      <div>
+        <Link to="/dashboard">
+          <button>Back to Lists</button>
+        </Link>
+      </div>
     </div>
   );
 };
