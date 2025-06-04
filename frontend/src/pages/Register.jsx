@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import "../styles/Register.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -37,46 +38,41 @@ const Register = () => {
       }
     }
   };
-
-  const captureUserEmail = (e) => {
-    setUserEmail(e.target.value);
-  };
-
-  const captureUserPassword = (e) => {
-    setUserPassword(e.target.value);
-  };
-
-  const captureUserName = (e) => {
-    setUserName(e.target.value);
-  };
-
   return (
-    <div>
+    <div className="auth-container">
       <h1>Register</h1>
       <form>
         <label>Name</label>
-        <input type="text" onChange={captureUserName} value={userName}></input>
-        <label>email</label>
+        <input
+          type="text"
+          onChange={(e) => setUserName(e.target.value)}
+          value={userName}
+        />
+
+        <label>Email</label>
         <input
           type="email"
-          onChange={captureUserEmail}
-          value={userEmail}></input>
+          onChange={(e) => setUserEmail(e.target.value)}
+          value={userEmail}
+        />
+
         <label>Password</label>
         <input
           type="password"
-          onChange={captureUserPassword}
-          value={userPassword}></input>
+          onChange={(e) => setUserPassword(e.target.value)}
+          value={userPassword}
+        />
 
         <button
           type="submit"
           onClick={(e) => {
             e.preventDefault();
             handleRegister();
-            console.log("clicked Register");
           }}>
           Register
         </button>
-        <div>
+
+        <div className="auth-footer">
           Already have an account? <Link to="/login">Log in!</Link>
         </div>
       </form>
