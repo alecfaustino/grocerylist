@@ -4,6 +4,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import DashList from "../components/DashList";
+import "../styles/Dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
