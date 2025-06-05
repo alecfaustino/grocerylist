@@ -59,7 +59,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div className="dashboard-container">
       <h1>Dashboard</h1>
       <h2>My Lists</h2>
       <h3>Add a List!</h3>

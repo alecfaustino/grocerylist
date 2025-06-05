@@ -1,4 +1,4 @@
-/* Reset some basic styles */
+/* Reset some basic styles
 body {
   margin: 0;
   padding: 0;
@@ -8,7 +8,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-}
+} */
 
 .login-container {
   display: flex;

@@ -7,10 +7,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Navbar from "./components/Navbar";
 import List from "./components/List";
 import { useState, useEffect } from "react";
+import axios from "axios";
 function App() {
   // ADD A INDEX ROUTE
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -21,10 +23,14 @@ function App() {
         setIsLoggedIn(!!res.data?.user_id);
       } catch {
         setIsLoggedIn(false);
+      } finally {
+        setCheckingAuth(false);
       }
     };
     checkLogin();
   }, []);
+
+  if (checkingAuth) return null;
 
   return (
     <>
