@@ -59,6 +59,8 @@
   - [x] My Personal Lists: User owned lists
   - [x] Update the routes in app.jsx (comment in list.jsx)
   - [ ] My Household Lists: with Phase 4
+  - [ ] Style Dashboard
+  - [ ] Style List
 
 - [x] Add List
 - [x] Delete List
