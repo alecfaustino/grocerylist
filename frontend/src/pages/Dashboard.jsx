@@ -63,10 +63,20 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <h1>Dashboard</h1>
       <h2>My Lists</h2>
-      <h3>Add a List!</h3>
-      <label>List Name</label>
-      <input type="text" onChange={captureListName} value={listName}></input>
-      <button onClick={(e) => addList(e)}>Add</button>
+      <div className="add-list-container">
+        <h3>Add a List</h3>
+        <form onSubmit={addList} className="add-list-form">
+          <label htmlFor="listName">List Name</label>
+          <input
+            id="listName"
+            type="text"
+            onChange={captureListName}
+            value={listName}
+            placeholder="e.g. Groceries"
+          />
+          <button type="submit">Add</button>
+        </form>
+      </div>
       {lists.map((list) => (
         <DashList
           key={list.list_id}

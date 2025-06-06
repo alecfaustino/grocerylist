@@ -101,4 +101,8 @@
   margin-bottom: 1rem;
 }
 
+.item-edit-container {
+  display: flex;
+  flex-direction: column;
+}
 

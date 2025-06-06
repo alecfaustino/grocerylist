@@ -185,11 +185,37 @@ router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
   const listId = req.params.listid;
   const itemId = req.params.itemid;
   //TODO implement photoUrl editting
-  const name = "hardcodedddd";
-  const quantity = 3;
-  const photoUrl = null;
-  const department_id = 1;
-  const store_id = 1;
+  const {
+    name,
+    quantity,
+    photo_url = null,
+    department_id,
+    store_name,
+  } = req.body;
+
+  let store_id;
+  if (store_name) {
+    const checkStoreQuery = `
+    SELECT id FROM stores WHERE LOWER(name) = LOWER($1);
+  `;
+    const checkStoreResult = await db.query(checkStoreQuery, [
+      store_name.trim(),
+    ]);
+
+    if (checkStoreResult.rows.length > 0) {
+      store_id = checkStoreResult.rows[0].id;
+    } else {
+      const insertStoreQuery = `
+      INSERT INTO stores (name)
+      VALUES ($1)
+      RETURNING id;
+    `;
+      const insertResult = await db.query(insertStoreQuery, [
+        store_name.trim(),
+      ]);
+      store_id = insertResult.rows[0].id;
+    }
+  }
   const patchQuery = `
   UPDATE items
   SET name = $1,
@@ -205,7 +231,7 @@ router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
   const patchValues = [
     name,
     quantity,
-    photoUrl,
+    photo_url,
     department_id,
     store_id,
     listId,

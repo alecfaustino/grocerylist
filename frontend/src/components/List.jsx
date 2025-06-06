@@ -164,6 +164,7 @@ const List = () => {
       {items.map((item) => (
         <ListItem
           key={item.item_id}
+          listId={listId}
           itemId={item.item_id}
           name={item.name}
           quantity={item.quantity}
