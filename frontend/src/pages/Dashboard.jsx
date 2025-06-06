@@ -11,6 +11,7 @@ const Dashboard = () => {
   const { userId } = useParams();
   const [lists, setLists] = useState([]);
   const [listName, setListName] = useState("");
+
   useEffect(() => {
     const fetchLists = async () => {
       try {
@@ -63,7 +64,7 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <h2>My Lists</h2>
       <h3>Add a List!</h3>
-      <label>ListName</label>
+      <label>List Name</label>
       <input type="text" onChange={captureListName} value={listName}></input>
       <button onClick={(e) => addList(e)}>Add</button>
       {lists.map((list) => (

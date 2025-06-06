@@ -83,8 +83,8 @@ const List = () => {
   return (
     <div className="list-container">
       <h2 className="list-title">{listName}</h2>
-      <p className="list-subtitle">This will be a search bar eventually?</p>
-      <p className="list-household">Household: Personal</p>
+      {/* <p className="list-subtitle">This will be a search bar eventually?</p> */}
+      {/* <p className="list-household">Household: Personal</p> */}
 
       <form className="list-form" onSubmit={(e) => e.preventDefault()}>
         <label>Name</label>

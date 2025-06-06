@@ -72,4 +72,46 @@ router.delete("/:listid", requireLogin, async (req, res) => {
   }
 });
 
+// edit a user list (personal)
+
+router.patch("/:listid", requireLogin, async (req, res) => {
+  const userId = req.session.user_id;
+  const listId = req.params.listid;
+  const name = req.body.name;
+
+  const editListQuery = `
+  UPDATE lists
+  SET name = $1
+  WHERE list_id = $2 AND
+  user_id = $3
+  RETURNING *;
+  `;
+
+  const editListValues = [name, listId, userId];
+
+  try {
+    // check ownership
+    const listCheck = await db.query(
+      `SELECT * FROM lists WHERE list_id = $1 AND user_id = $2;`,
+      [listId, userId]
+    );
+    if (listCheck.rows.length === 0) {
+      return res
+        .status(403)
+        .json({ error: "Forbidden: You don't own this list" });
+    }
+
+    const editListResult = await db.query(editListQuery, editListValues);
+    res.status(200).json({
+      message: `Successfully updated the list`,
+      data: editListResult.rows,
+    });
+  } catch (error) {
+    console.error("error updating list");
+    res.status(500).json({
+      error: "Internal Server Error Updating List",
+    });
+  }
+});
+
 module.exports = router;

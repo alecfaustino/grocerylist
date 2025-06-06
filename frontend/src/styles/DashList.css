@@ -1,0 +1,47 @@
+.dash-list-card {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  margin: 0.5rem 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.dash-list-card:hover {
+  background-color: #f0f0f0;
+}
+
+.dash-list-card p {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-right: 1rem;
+}
+
+.dash-list-card button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  margin-left: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dash-list-card button:hover {
+  background-color: #0056b3;
+}
+
+.dash-list-card button:last-child {
+  background-color: #dc3545;
+}
+
+.dash-list-card button:last-child:hover {
+  background-color: #b52a37;
+}

@@ -196,7 +196,6 @@ router.patch("/:listid/:itemid", requireLogin, async (req, res) => {
       message: `Successfully updated item ${itemId} in list ${listId}`,
       data: patchResult.rows,
     });
-    console.log(patchResult);
   } catch (error) {
     console.error("error updating list item");
     res.status(500).json({
