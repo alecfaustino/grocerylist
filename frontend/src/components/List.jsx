@@ -82,38 +82,62 @@ const List = () => {
 
   return (
     <div className="list-container">
-      <h2>{listName}</h2>
-      <p>This will be a search bar eventually?</p>
-      <p>Household: Personal</p>
-      <label>Name</label>
-      <input type="text" onChange={captureName} value={itemName}></input>
-      <label>Quantity</label>
-      <input
-        type="number"
-        onChange={captureQuantity}
-        value={itemQuantity}></input>
-      <label>Department</label>
-      <select
-        name="department"
-        onChange={captureDepartment}
-        value={itemDepartment}>
-        <option value="">--Select a Department</option>
-        <option value="1">Produce</option>
-        <option value="2">Dairy</option>
-        <option value="3">Bakery</option>
-        <option value="4">Meat</option>
-        <option value="5">Frozen Foods</option>
-      </select>
+      <h2 className="list-title">{listName}</h2>
+      <p className="list-subtitle">This will be a search bar eventually?</p>
+      <p className="list-household">Household: Personal</p>
 
-      <label>Store</label>
-      <select name="store" onChange={captureStore} value={itemStore}>
-        <option value="">--Select a Store --</option>
-        <option value="1">Costco</option>
-        <option value="2">SuperStore</option>
-        <option value="3">Lucky</option>
-      </select>
+      <form className="list-form" onSubmit={(e) => e.preventDefault()}>
+        <label>Name</label>
+        <input
+          className="form-input"
+          type="text"
+          onChange={captureName}
+          value={itemName}
+        />
 
-      <button onClick={addItem}>Add</button>
+        <label>Quantity</label>
+        <input
+          className="form-input"
+          type="number"
+          onChange={captureQuantity}
+          value={itemQuantity}
+        />
+
+        <label>Department</label>
+        <select
+          className="form-select"
+          onChange={captureDepartment}
+          value={itemDepartment}>
+          <option value="">--Select a Department</option>
+          <option value="1">Produce</option>
+          <option value="2">Dairy</option>
+          <option value="3">Bakery</option>
+          <option value="4">Meat</option>
+          <option value="5">Frozen Foods</option>
+        </select>
+
+        <label>Store</label>
+        <select
+          className="form-select"
+          onChange={captureStore}
+          value={itemStore}>
+          <option value="">--Select a Store --</option>
+          <option value="1">Costco</option>
+          <option value="2">SuperStore</option>
+          <option value="3">Lucky</option>
+        </select>
+
+        <button className="btn add-btn" onClick={addItem}>
+          Add
+        </button>
+      </form>
+
+      <div className="top-nav">
+        <Link to="/dashboard" className="back-link">
+          ← Back to Lists
+        </Link>
+      </div>
+
       {items.map((item) => (
         <ListItem
           key={item.item_id}
@@ -125,12 +149,6 @@ const List = () => {
           setItems={setItems}
         />
       ))}
-
-      <div>
-        <Link to="/dashboard">
-          <button>Back to Lists</button>
-        </Link>
-      </div>
     </div>
   );
 };

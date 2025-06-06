@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/ListItem.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "../styles/ListItem.css";
 
 const ListItem = ({ name, quantity, department, store, itemId, setItems }) => {
   const { listId } = useParams();
@@ -28,10 +29,14 @@ const ListItem = ({ name, quantity, department, store, itemId, setItems }) => {
           <p>Store: {store}</p>
         </div>
       </div>
-      <footer>
+      <footer className="list-card-footer">
         <div className="list-card-btn-container">
-          <button onClick={() => deleteTaskClick(itemId)}>Delete</button>
-          <button>Edit</button>
+          <button
+            className="btn delete-btn"
+            onClick={() => deleteTaskClick(itemId)}>
+            Delete
+          </button>
+          <button className="btn edit-btn">Edit</button>
         </div>
       </footer>
     </div>
