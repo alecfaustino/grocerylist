@@ -13,9 +13,20 @@ const List = () => {
   const [itemStore, setItemStore] = useState("");
   const [itemDepartment, setItemDepartment] = useState("");
   const [listName, setListName] = useState("");
+  const [storeList, setStoreList] = useState([]);
   const { listId } = useParams();
 
   useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/stores");
+        setStoreList(res.data);
+      } catch (error) {
+        console.error("Error loading stores", error);
+      }
+    };
+
+    fetchStores();
     const fetchItems = async () => {
       try {
         const result = await axios.get(
@@ -47,7 +58,7 @@ const List = () => {
       await axios.post(`http://localhost:8080/api/items/${listId}`, {
         name: itemName,
         quantity: itemQuantity,
-        store_id: itemStore,
+        store_name: itemStore,
         department_id: itemDepartment,
       });
 
@@ -117,6 +128,18 @@ const List = () => {
         </select>
 
         <label>Store</label>
+        <input
+          list="store-options"
+          className="form-input"
+          value={itemStore}
+          onChange={captureStore}
+        />
+        <datalist id="store-options">
+          {storeList.map((store) => (
+            <option key={store.id} value={store.name} />
+          ))}
+        </datalist>
+        {/* <label>Store</label>
         <select
           className="form-select"
           onChange={captureStore}
@@ -125,7 +148,7 @@ const List = () => {
           <option value="1">Costco</option>
           <option value="2">SuperStore</option>
           <option value="3">Lucky</option>
-        </select>
+        </select> */}
 
         <button className="btn add-btn" onClick={addItem}>
           Add

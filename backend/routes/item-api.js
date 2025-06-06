@@ -54,13 +54,45 @@ router.post("/:listid", requireLogin, async (req, res) => {
   if (!userId) {
     return res.status(401).json({ error: "Not authenticated" });
   }
+  const submittedStoreName = req.body.store_name?.trim();
+  if (!submittedStoreName) {
+    return res.status(400).json({ error: "Store name is required" });
+  }
+
+  const normalize = (name) =>
+    name
+      .toLowerCase()
+      .replace(/\s+/g, "")
+      .replace(/[^a-z0-9]/gi, "");
+
+  // Get all stores
+  const allStores = await db.query(`SELECT id, name FROM stores`);
+  const normalizedSubmitted = normalize(submittedStoreName);
+
+  // Try to find an existing match
+  let storeId = null;
+  for (const store of allStores.rows) {
+    if (normalize(store.name) === normalizedSubmitted) {
+      storeId = store.id;
+      break;
+    }
+  }
+
+  // If no match, insert new store
+  if (!storeId) {
+    const insertResult = await db.query(
+      `INSERT INTO stores (name) VALUES ($1) RETURNING id`,
+      [submittedStoreName]
+    );
+    storeId = insertResult.rows[0].id;
+  }
+
   const listid = req.params.listid;
   const itemname = req.body.name;
   const quantity = req.body.quantity;
   // TODO implement this photo function in the future
   const photoUrl = null;
   const departmentId = Number(req.body.department_id);
-  const storeId = Number(req.body.store_id);
 
   const addItemQuery = `
     INSERT INTO items (list_id, name, quantity, photo_url, department_id, store_id)

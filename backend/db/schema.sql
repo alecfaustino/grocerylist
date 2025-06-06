@@ -59,6 +59,9 @@ CREATE TABLE stores (
   name VARCHAR(50) NOT NULL
 );
 
+CREATE UNIQUE INDEX unique_store_name ON stores (LOWER(name));
+
+
 -- Table: items
 CREATE TABLE items (
   item_id BIGSERIAL PRIMARY KEY,

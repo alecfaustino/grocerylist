@@ -3,8 +3,10 @@ import "../styles/ListItem.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import "../styles/ListItem.css";
+import { useState } from "react";
 
 const ListItem = ({ name, quantity, department, store, itemId, setItems }) => {
+  const [cardEdit, setCardEdit] = useState(false);
   const { listId } = useParams();
   const deleteTaskClick = async (item) => {
     try {
