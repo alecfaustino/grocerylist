@@ -31,12 +31,14 @@ const usersRoutes = require("./routes/users-api");
 const listApi = require("./routes/list-api");
 const itemApi = require("./routes/item-api");
 const storeApi = require("./routes/stores-api");
+const householdApi = require("./routes/household-api");
 
 // mounting router
 app.use("/api/users", usersRoutes);
 app.use("/api/lists", listApi);
 app.use("/api/items", itemApi);
 app.use("/api/stores", storeApi);
+app.use("/api/households", householdApi);
 
 app.get("/", (req, res) => {
   res.send("Server is running");
