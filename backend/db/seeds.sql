@@ -6,10 +6,10 @@ VALUES
   ('Carol Lee', 'carol@example.com', 'hashed_pw_3');
 
 -- Households
-INSERT INTO households (address)
+INSERT INTO households (name)
 VALUES 
-  ('123 Maple Street'),
-  ('456 Oak Avenue');
+  ('Family One'),
+  ('Family Two');
 
 -- Household Users
 INSERT INTO household_users (user_id, household_id, role)

@@ -62,7 +62,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <h1>Dashboard</h1>
-      <h2>My Lists</h2>
+      <h2>My Personal Lists</h2>
       <div className="add-list-container">
         <h3>Add a List</h3>
         <form onSubmit={addList} className="add-list-form">
@@ -88,6 +88,7 @@ const Dashboard = () => {
           setLists={setLists}
         />
       ))}
+      <h2>My Household Lists</h2>
     </div>
   );
 };

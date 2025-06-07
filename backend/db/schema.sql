@@ -17,10 +17,20 @@ CREATE TABLE users (
 -- Table: households
 CREATE TABLE households (
   household_id BIGSERIAL PRIMARY KEY,
-  address VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Table: household_users
+CREATE TABLE household_users (
+  id BIGSERIAL PRIMARY KEY,
+  user_id BIGINT NOT NULL,
+  household_id BIGINT NOT NULL,
+  role user_role NOT NULL DEFAULT 'member',
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (household_id) REFERENCES households(household_id) ON DELETE CASCADE,
+  UNIQUE (user_id, household_id)
+);
 -- Table: lists
 CREATE TABLE lists (
   list_id BIGSERIAL PRIMARY KEY,
@@ -36,16 +46,6 @@ CREATE TABLE lists (
   )
 );
 
--- Table: household_users
-CREATE TABLE household_users (
-  id BIGSERIAL PRIMARY KEY,
-  user_id BIGINT NOT NULL,
-  household_id BIGINT NOT NULL,
-  role user_role NOT NULL DEFAULT 'member',
-  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (household_id) REFERENCES households(household_id) ON DELETE CASCADE,
-  UNIQUE (user_id, household_id)
-);
 
 -- Table: departments
 CREATE TABLE departments (

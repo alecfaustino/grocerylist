@@ -59,12 +59,12 @@
   - [x] My Personal Lists: User owned lists
   - [x] Update the routes in app.jsx (comment in list.jsx)
   - [ ] My Household Lists: with Phase 4
-  - [ ] Style Dashboard
-  - [ ] Style List
+  - [x] Style Dashboard
+  - [x] Style List
 
 - [x] Add List
 - [x] Delete List
-- [ ] Edit List
+- [x] Edit List
 
 ### Phase 4: Household Features
 
@@ -75,11 +75,14 @@
   - [ ] Update household
   - [ ] Delete household
   - [ ] Add/remove users to household
+  - [ ] Admin only - maybe a +/- button on each member's information in the household menu
   - [ ] Admin-only protection (middleware)
 
-- [ ] Switch views feature
+- [ ] Switch views feature (show list for personal / household)
 
   - [ ] Drop down or toggle
+  - [ ] Create / Join Household buttons
+  - [ ] Send household invites via email
 
 - [ ] UI for household actions
 
