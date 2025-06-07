@@ -78,6 +78,20 @@
   - [ ] Admin only - maybe a +/- button on each member's information in the household menu
   - [ ] Admin-only protection (middleware)
 
+  ### Next;
+
+  - Create a route to POST /households (create)
+
+  - Create a route to POST /households/:id/join (invite or join)
+
+  - Add middleware: isHouseholdMember, isHouseholdAdmin
+
+  - Basic UI for creating a household
+
+  - Add a view toggle: personal vs household list
+
+================================================
+
 - [ ] Switch views feature (show list for personal / household)
 
   - [ ] Drop down or toggle
