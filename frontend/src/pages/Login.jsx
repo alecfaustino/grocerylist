@@ -47,6 +47,9 @@ const Login = ({ setIsLoggedIn }) => {
 
         setLoginFailed(true);
         setLoginFailedMessage(error.response.data.message);
+        setTimeout(() => {
+          setLoginFailed(false);
+        }, 3000);
         console.error("Unexpected error:", error.message);
       }
     }
