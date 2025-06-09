@@ -10,6 +10,8 @@ const Login = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [loginFailed, setLoginFailed] = useState(false);
+  const [loginFailedMessage, setLoginFailedMessage] = useState("");
 
   const handleLogIn = async () => {
     try {
@@ -40,7 +42,11 @@ const Login = ({ setIsLoggedIn }) => {
           error.response.status,
           error.response.data
         );
-      } else {
+
+        console.log(error.response.data.message);
+
+        setLoginFailed(true);
+        setLoginFailedMessage(error.response.data.message);
         console.error("Unexpected error:", error.message);
       }
     }
@@ -59,6 +65,7 @@ const Login = ({ setIsLoggedIn }) => {
       <form className="login-form">
         <h1>Login</h1>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {loginFailed && <p className="error-message">{loginFailedMessage} </p>}
 
         <label htmlFor="email">Email</label>
         <input
